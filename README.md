@@ -124,7 +124,8 @@ If `RABBITMQ_ENABLED` is commented out internal fake pubsub will be used especia
 
 This module is really awesome since it gives you a Flow Diagram for all the nodes that are created
 
-![Screenshot from 2022-04-19 16-46-03](https://user-images.githubusercontent.com/19847933/164018212-320d06b1-5d14-4206-8b6a-cbe37443146a.png)
+![Screenshot from 2022-04-19 16-50-00](https://user-images.githubusercontent.com/19847933/164018785-08acd32d-5c5a-47c9-a8cf-2185faf1c2f1.png)
+
 
 
 The module can be installed using npm
