@@ -1,12 +1,14 @@
 import {
   CoreModule,
   GenericGapiResolversType,
+  GRAPHQL_PLUGIN_CONFIG,
   HookService,
   Module,
   ON_REQUEST_HANDLER,
   RESOLVER_HOOK,
 } from '@gapi/core';
 
+import { AuthService } from '~app/auth.service';
 import { Environment, isProduction } from '~app/environment';
 
 @Module({
@@ -63,6 +65,7 @@ import { Environment, isProduction } from '~app/environment';
         port: Environment.AMQP_PORT,
         pass: Environment.AMQP_PASS,
         user: Environment.AMQP_USER,
+        authentication: AuthService as never,
         subscriptionServerOptions: {
           perMessageDeflate: {
             zlibDeflateOptions: {
@@ -105,14 +108,15 @@ import { Environment, isProduction } from '~app/environment';
     },
     {
       provide: ON_REQUEST_HANDLER,
-      useFactory: () => (next: Function, request: Request) => {
+      deps: [GRAPHQL_PLUGIN_CONFIG, AuthService],
+      useFactory: (config: GRAPHQL_PLUGIN_CONFIG, authService: AuthService) => async (
+        next: Function,
+        request: Request,
+      ) => {
         /* Every request comming from client will be processed here so we can put user context or other context here */
         request;
         // request.headers.authorization
-        // const config = Container.get(GRAPHQL_PLUGIN_CONFIG);
-        // config.graphqlOptions.context = {
-        //   // driver,
-        // };
+        config.graphqlOptions.context = await authService.authenticate();
         return next();
       },
     },
