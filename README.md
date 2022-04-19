@@ -119,4 +119,32 @@ config:
 
 If `RABBITMQ_ENABLED` is commented out internal fake pubsub will be used especially good for development purposes in order to not spin up whole RabbitMQ server
 
+
+#### Installing optional Graphql Voyager
+
+This module is really awesome since it gives you a Flow Diagram for all the nodes that are created
+
+![Screenshot from 2022-04-19 16-46-03](https://user-images.githubusercontent.com/19847933/164018212-320d06b1-5d14-4206-8b6a-cbe37443146a.png)
+
+
+The module can be installed using npm
+
+```bash
+npm install @gapi/voyager
+```
+
+Then import the module inside `app.module.ts` `imports`
+
+```typescript
+import { Module } from '@gapi/core';
+import { VoyagerModule } from '@gapi/voyager';
+
+@Module({
+  imports: [VoyagerModule.forRoot()],
+})
+export class AppModule {}
+```
+
+To access Voyager go to address http://localhost:9000/voyager
+
 Njoy!
