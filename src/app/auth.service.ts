@@ -1,12 +1,14 @@
 import { Injectable } from '@rxdi/core';
 
+import { GraphqlContext } from './app.context';
+
 interface WebSocketConnectionParams {
   Authorization: string;
 }
 
 @Injectable()
 export class AuthService {
-  async onSubConnection(connectionParams: WebSocketConnectionParams, websocket) {
+  async onSubConnection(connectionParams: WebSocketConnectionParams, websocket): Promise<GraphqlContext> {
     console.log('Subscription connected');
     return this.authenticate();
   }
@@ -19,10 +21,10 @@ export class AuthService {
     return params;
   }
 
-  async authenticate() {
+  async authenticate(): Promise<GraphqlContext> {
     return {
       user: {
-        id: 1,
+        id: '1',
       },
     };
   }

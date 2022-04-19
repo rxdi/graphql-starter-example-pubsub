@@ -59,7 +59,6 @@ import { Environment, isProduction } from '~app/environment';
         },
       },
       pubsub: {
-        remotePubsub: false,
         activateRabbitMQ: isProduction() || Environment.RABBITMQ_ENABLED,
         host: Environment.AMQP_HOST,
         port: Environment.AMQP_PORT,
