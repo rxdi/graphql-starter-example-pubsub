@@ -1,0 +1,28 @@
+version: "2"
+services:
+  rabbitMq:
+    image: rabbitmq:3.8.11-management
+    expose:
+      - "15672"
+      - "5672"
+      - "5671"
+      - "4369"
+      - "1883"
+    restart: always
+    container_name: graphql-server-rabbitmq-example
+    environment:
+      - RABBITMQ_VM_MEMORY_HIGH_WATERMARK=1.0
+      - RABBITMQ_DEFAULT_USER=my-user
+      - RABBITMQ_DEFAULT_PASS=my-user-password
+    volumes:
+      - "$PWD/rabbit_enabled_plugins:/etc/rabbitmq/enabled_plugins"
+    networks:
+      graphql-server-example:
+        ipv4_address: 142.10.0.5
+networks:
+  graphql-server-example:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 142.10.0.0/16
+          gateway: 142.10.0.1

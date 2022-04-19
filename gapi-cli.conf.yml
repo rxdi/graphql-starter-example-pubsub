@@ -1,0 +1,28 @@
+config:
+  # Application configuration
+  app:
+    local:
+      API_PORT: 9000
+      NODE_ENV: development
+      GRAPHIQL_TOKEN: ''
+
+      AMQP_HOST: 142.10.0.5
+      AMQP_PORT: 5672
+      AMQP_USER: my-user
+      AMQP_PASS: my-user-password
+      RABBITMQ_ENABLED: true
+
+  # Testing configuration for local(dev) extending app/local configuration
+  test:
+    local: extends app/local
+
+  schema:
+    introspectionEndpoint: http://localhost:9000/graphql
+    introspectionOutputFolder: ./src/app/core/api-introspection
+
+commands:
+# You can define your custom commands for example
+# commands:
+#   your-cli:
+#     my-command: 'npm -v'
+# This command can be executed as "gapi your-cli my-command"
