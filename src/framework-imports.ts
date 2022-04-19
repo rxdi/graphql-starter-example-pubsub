@@ -95,13 +95,15 @@ import { Environment, isProduction } from '~app/environment';
       provide: RESOLVER_HOOK,
       deps: [HookService],
       useFactory: () => (resolver: GenericGapiResolversType) => {
-        const resolve = resolver.resolve.bind(resolver.target);
-        resolver.resolve = async function(root, args, context, info, ...a) {
+        const resolve = resolver.resolve.bind(resolver.target) as typeof resolver.resolve;
+        resolver.resolve = async function(root, args, context, info) {
           /*
            *  Here every resolver can be modified even we can check for the result and strip some field
            *  Advanced logic for authentication can be applied here using @gapi/ac or equivalent package
            */
-          return resolve(root, args, context, info, ...a);
+          const result = await resolve(root, args, context, info);
+
+          return result;
         };
         return resolver;
       },

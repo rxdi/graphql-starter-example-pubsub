@@ -12,7 +12,15 @@ npm install
 docker-compose up
 ```
 
-#### Starting the server
+#### Installing `@gapi/cli`
+
+Before you start the server `@gapi/cli` needs to be installed
+
+```bash
+npm i -g @gapi/cli
+```
+
+#### Starting graphql server
 
 ```bash
 npm start
@@ -88,5 +96,27 @@ password: `my-user-password`
 Notice that until you have a subscriber to a particular topic the connection with RabbitMQ is lazy and will not be established.
 
 As long as `listenForChanges` is subscribed using the Graphql Playground we should imidiately see that Exchanges, Queues and Connections are defined.
+
+#### Changing the environment variables can be done using `gapi-cli.conf.yml` file
+
+Note: in order for the changes to take effect server needs to be stopped and started again
+
+```yml
+config:
+  # Application configuration
+  app:
+    local:
+      API_PORT: 9000
+      NODE_ENV: development
+      GRAPHIQL_TOKEN: ''
+
+      AMQP_HOST: 142.10.0.5
+      AMQP_PORT: 5672
+      AMQP_USER: my-user
+      AMQP_PASS: my-user-password
+      RABBITMQ_ENABLED: true
+```
+
+If `RABBITMQ_ENABLED` is commented out internal fake pubsub will be used especially good for development purposes in order to not spin up whole RabbitMQ server
 
 Njoy!
